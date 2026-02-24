@@ -67,8 +67,7 @@
     </div>
 
     <script>
-      const now = new Date();
-      document.getElementById("time").value = now.toISOString().slice(0, 16);
+      document.getElementById("time").value = new Date().toISOString().slice(0, 16);
 
       function convert() {
         const timeValue = document.getElementById("time").value;
@@ -89,7 +88,7 @@
 
         const dateString = date.toLocaleString().replaceAll(".", ":");
 
-        const trimmedDateString = dateString.slice(0,17);
+        const trimmedDateString = dateString.slice(0, 17);
         document.getElementById("out").textContent =
           "Konverteret: " + trimmedDateString;
       }
