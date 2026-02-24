@@ -67,7 +67,9 @@
     </div>
 
     <script>
-      document.getElementById("time").value = new Date().toISOString().slice(0, 16);
+      document.getElementById("time").value = new Date()
+        .toISOString()
+        .slice(0, 16);
 
       function convert() {
         const timeValue = document.getElementById("time").value;
