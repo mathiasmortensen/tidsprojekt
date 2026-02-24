@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tidskonverter</title>
+    <style>
+      body {
+        font-family: system-ui;
+        margin-top: 50px;
+        text-align: center;
+        background-color: #f0f0f0;
+        padding: 20px;
+      }
+      input,
+      select,
+      button {
+        margin: 5px;
+        padding: 10px;
+      }
+
+      .parent {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        gap: 8px;
+      }
+
+      .child {
+        grid-column: span 3 / span 3;
+        grid-row: span 3 / span 3;
+        grid-column-start: 2;
+        grid-row-start: 2;
+      }
+
+      #out {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="parent">
+      <div class="child">
+        <h2>Tidskonverter</h2>
+
+        <input id="time" type="datetime-local" />
+
+        <select id="from">
+          <option value="1">København (UTC+1)</option>
+          <option value="0">Zulu (UTC+0)</option>
+          <option value="-5">New York (UTC-5)</option>
+          <option value="9">Tokyo (UTC+9)</option>
+        </select>
+
+        <select id="to">
+          <option value="0">Zulu (UTC+0)</option>
+          <option value="1">København (UTC+1)</option>
+          <option value="-5">New York (UTC-5)</option>
+          <option value="9">Tokyo (UTC+9)</option>
+        </select>
+
+        <button onclick="convert()">Konverter</button>
+
+        <p id="out"></p>
+      </div>
+    </div>
+
+    <script>
+      const now = new Date();
+      document.getElementById("time").value = now.toISOString().slice(0, 16);
+
+      function convert() {
+        const timeValue = document.getElementById("time").value;
+        if (!timeValue) {
+          document.getElementById("out").textContent =
+            "Indtast venligst en tid.";
+          return;
+        }
+
+        const date = new Date(timeValue);
+
+        const from = Number(document.getElementById("from").value);
+        const to = Number(document.getElementById("to").value);
+
+        const diff = to - from;
+
+        date.setHours(date.getHours() + diff);
+
+        const dateString = date.toLocaleString().replaceAll(".", ":");
+
+        const trimmedDateString = dateString.slice(0,17);
+        document.getElementById("out").textContent =
+          "Konverteret: " + trimmedDateString;
+      }
+    </script>
+  </body>
+</html>
